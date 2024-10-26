@@ -50,10 +50,13 @@ export default {
         this.flyPosition.x = Math.random() * (window.innerWidth - 50); 
         this.flyPosition.y = Math.random() * (window.innerHeight - 50);
         this.angle += Math.random() * 20 - 10; 
-      }, 750); 
+      }, 1000); 
     },
     handleCatch() {
       this.opacity = 0; 
+      const flyElement = this.$el; 
+      flyElement.classList.add('fade-out'); 
+
       setTimeout(() => {
         this.isVisible = false; 
         this.$emit('catch'); 
@@ -66,6 +69,36 @@ export default {
 <style scoped>
 .fly {
   position: absolute;
-  transition: opacity 0.5s, transform 0.1s; 
+  transition: opacity 0.5s, transform 0.1s;
+  animation: flyIn 0.5s ease-in-out;
+}
+
+@keyframes flyIn {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.fly.fade-out {
+  animation: fadeOut 0.5s forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
 }
 </style>
